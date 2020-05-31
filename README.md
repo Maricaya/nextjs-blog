@@ -1,30 +1,112 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/zeit/next.js/tree/canary/packages/create-next-app).
-
-## Getting Started
-
-First, run the development server:
+# 起步
 
 ```bash
-npm run dev
-# or
-yarn dev
+npm init next-app 项目名称
+yarn add --dev @types/react @types/react-dom
+# 安装这个是为了让 WebStorm 自动提示
+
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 新增页面 
+建立目录 pages/posts/first-post.js
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+查看 http://localhost:3000/posts/first-post
 
-## Learn More
+# 导航
+/ 到 /posts/first-post 
+页面直接跳转,没有发出任何请求.
 
-To learn more about Next.js, take a look at the following resources:
+传统导航
+浏览器访问page1,page2
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+next 快速导航(客户端导航)
+页面不会刷新,用 AJAX 请求新页面内容
+不会请求重复的 HTML,CSS,JS
+自动在页面插入新内容,删除旧内容
+因为省了一些请求和解析过程,所以速度极快
 
-You can check out [the Next.js GitHub repository](https://github.com/zeit/next.js/) - your feedback and contributions are welcome!
+# css
+使用 scss
+yarn add sass
 
-## Deploy on Vercel
+# 静态资源
+next 推荐放在 public/ 里，但是我并不推荐这种做法，因为不支持哈希。
+public 中的静态资源没有加缓存，这样每次请求资源都会去请求服务器，造成资源浪费。
+但是如果加了缓存，我们每次更新静态资源就必须更新资源名称，否则浏览器还是会加载旧资源。
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+需要在 next.js 中配置 webpack
+建立文件 next.config.js 配置 file-loader
+安装 yarn add --dev file-loader
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+```js
+module.exports = {
+  webpack: (config, options) => {
+    config.module.rules.push({
+      test: /\.(png|jpg|jpeg|gif|svg)$/,
+      use: [
+        {
+          loader: 'file-loader',
+          options: {
+            // img 路径名称.hash.ext
+            // 比如 1.png 路径名称为
+            // _next/static/1.29fef1d3301a37127e326ea4c1543df5.png
+            name: '[name].[contenthash].[ext]',
+            // 硬盘路径
+            outputPath: 'static',
+            // 网站路径是
+            publicPath: '_next/static'
+          }
+        }
+      ]
+    })
+    return config
+  }
+}
+```
+
+如果不想自己配置，也可以使用 next-images
+
+```bash
+yarn add next-images
+```
+
+```js
+const withImages = require('next-images')
+
+module.exports = withImages({
+  webpack(config, options) {
+    return config
+  }
+})
+
+```
+
+# 启用 typescript
+## 创建 tsconfig.json
++ tsc --init 运行后得到 tsconfig.json
++ 将 jsconfig.json 里面的配置合并到 tsconfig.json
+- 删除 jsconfig.json
+
+## 重启 yarn dev
+- yarn add --dev typescript @types/react @types/node @types/react-dom
+- yarn dev
+
+## 改后缀
+- 将文件名由 .js 改为 .tsx
+- 不需要一次将所有文件全部改完
+
+# tsconfig 加强
+在 tsconfig.json 里添加
+"noImplicitAny": true
+禁用隐式的 any    
+
+# Next.js API
+## 目前的页面
+- index 和 posts/first-post 都是 HTML
+- 但实际开发中我们需要请求 /user /shops 等 API
+- 返回的内容是 JSON 格式的字符串
+
+## 使用 Next.js API
+- 路径为 /api/v1/posts 以便与 /posts 区分开来
+- 默认导出的函数的类型为 NextApiHandler
+- 该代码只运行在 Node.js 里,不运行在浏览器里
