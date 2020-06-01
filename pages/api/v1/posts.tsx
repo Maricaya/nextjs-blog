@@ -1,20 +1,12 @@
 import {NextApiHandler} from 'next';
-import fs, {promises as fsPromise} from 'fs';
-import path from 'path';
+import {getPosts} from "../../../lib/post";
 
-const getPosts = async () => {
-  const markdownDir = path.join(process.cwd() + 'markdown')
-
-  const fileNames = await fsPromise.readdir(markdownDir)
-
-  console.log(fileNames)
-}
-
-const Posts: NextApiHandler =  (req, res) => {
-  res.statusCode = 200
-  res.setHeader('Content-Type', 'application/json')
-  res.write(JSON.stringify({name: 'frank'}))
-  res.end()
-}
+const Posts: NextApiHandler =  async (req, res) => {
+  const posts = await getPosts();
+  res.statusCode = 200;
+  res.setHeader('Content-Type', 'application/json');
+  res.write(JSON.stringify(posts));
+  res.end();
+};
 
 export default Posts

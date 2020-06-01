@@ -110,3 +110,61 @@ module.exports = withImages({
 - 路径为 /api/v1/posts 以便与 /posts 区分开来
 - 默认导出的函数的类型为 NextApiHandler
 - 该代码只运行在 Node.js 里,不运行在浏览器里
+
+```bash
+yarn add gray-matter
+# 如果没有，肯定是自带的
+yarn add --dev @types/gray-matter
+```
+
+posts 接口 
+```tsx
+import path from "path";
+import fs, {promises as fsPromise} from "fs";
+import matter from "gray-matter";
+
+export const getPosts = async () => {
+    const markdownDir = path.join(process.cwd(), 'markdown');
+
+    const fileNames = await fsPromise.readdir(markdownDir);
+
+    const x = fileNames.map(fileName => {
+        const fullPath = path.join(markdownDir, fileName);
+        const id = fileName.replace(fullPath, '');
+        console.log('fullPath');
+        const text = fs.readFileSync(fullPath, 'utf8');
+        const {data: {title, date}, content} = matter(text);
+        return {
+          id, title, date
+        }
+    });
+    console.log('x');
+    console.log(x);
+    return x;
+};
+```
+
+# Next.js 三种渲染
+##  客户端渲染
+-   只在浏览器上执行的渲染
+
+##  静态页面生成（SSG）
+-   Static Site Generation，解决白屏问题、SEO 问题
+-   无法生成用户相关内容(所有用户请求都一样)
+
+##  服务端渲染（SSR)
+-   解决白屏问题、SEO 问题
+-   可以生成用户相关内容（不同用户结果不同）
+
+-   注意 SSR 和 SSG 都属于预渲染 Pre-rendering
+
+### 旧瓶装新酒
+#### 三种渲染方式分别对应
+-   客户端渲染 -- 用 JS 创建 HTML
+-   SSG -- 页面静态化，把 PHP 提前渲染成 HTML
+-   SSR -- PHP、Python、Ruby、Java 后台的基本功能
+#### 不同点
+-   Next.js 的预渲染可以与前端 React 无缝对接
+
+
+
