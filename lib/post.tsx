@@ -12,7 +12,7 @@ export const getPosts = async () => {
         const id = fileName.replace(fullPath, '');
         console.log('fullPath');
         const text = fs.readFileSync(fullPath, 'utf8');
-        const {data: {title, date}, content} = matter(text);
+        const {data: {title, date}} = matter(text);
         return {
           id, title, date
         }

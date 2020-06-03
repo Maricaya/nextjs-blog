@@ -166,5 +166,141 @@ export const getPosts = async () => {
 #### 不同点
 -   Next.js 的预渲染可以与前端 React 无缝对接
 
+# 第一种方式 客户端渲染
+## 缺点
+-   白屏
+在 AJAX 得到相应之前，页面中之后 Loading
+-   SEO 不友好
+搜索引擎访问页面，看不懂 posts 数据
+因为搜索引擎默认不会执行 JS，只能看到 HTML
 
+react 代码
+```tsx
+// 访问 http://localhost:3000/posts
+// 客户端渲染，数据本来不在页面上，通过 ajax 请求后渲染到页面上
+// 这种方式白屏时间很长
+import {NextPage} from 'next';
+import axios from 'axios';
+import {useEffect, useState} from "react";
+import * as React from "react";
 
+type Post = {
+    id: string,
+    id: string,
+    title: string
+}
+const PostsIndex: NextPage = () => {
+    // [] 表示只在第一次渲染的时候请求
+    const [posts, setPosts] = useState<Post[]>([]);
+    const [isLoading, setIsLoading] = useState(false);
+    const [isEmpty, setIsEmpty] = useState(false);
+    useEffect(() => {
+        setIsLoading(true);
+        axios.get('/api/v1/posts').then(response => {
+            setTimeout(() => {
+                setPosts(response.data);
+                if (response.data.length === 0) {
+                    setIsEmpty(true);
+                }
+                setIsLoading(false);
+            }, 3000);
+        }, () => {
+            setIsLoading(true);
+        })
+    }, []);
+    return (
+        <div>
+            <h1>文章列表</h1>
+            {isLoading ? <div>加载中</div> :
+                isEmpty ? <div>没有文章</div>
+                    : posts.map(p => <div key={p.id}>
+                {p.id}
+            </div>)}
+        </div>
+    )
+};
+
+export default PostsIndex;
+```
+
+上面的内容，服务端渲染了一次，客户端又渲染了一次。
+
+-   参考 React SSR 的官方文档
+推荐在后端 renderToString() 在前端 hydrate()
+hydrate() 混合，会保留 HTML 并附上事件监听
+也就是说后端会渲染 HTML, 前端添加监听
+前端也会渲染一次，以确保前后端渲染结果一致。
+
+比如：加上 debugger，修改 HTML 内容，控制台会报错。
+因为前后端渲染结果不一致
+
+-   推论
+所有页面至少有一个标签是静态内容，由服务端渲染
+
+# 第二种渲染方式 静态页面生成（SSG）
+博客网站，其实每个人看到的文章列表都是一样的。
+那为什么还需要在每个人的浏览器上渲染一次？
+为什么不在后端渲染好，然后分发给每个人。
+N 次渲染变成了 1 次渲染
+N 次客户端渲染变成了 1 次静态页面生成
+这个过程叫做 **动态内容静态化**
+
+-   显然，后端最好不要通过 AJAX 来获取 posts
+-   那么，应该如何获取 posts 呢？
+
+## getStaticProps 获取 posts
+-   声明位置
+每个 page 不是默认导出一个函数吗？
+把 getStaticProps 声明在这个函数旁边即可
+
+ps: .d.ts 文件中放置公共代码
+
+代码写法：
+```tsx
+export const getStaticProps: GetStaticProps = async () => {
+    const posts = await getPosts();
+    return {
+        props: {posts: posts}
+    }
+}
+```
+同构！
+
+![avatar](/assets/images/2.jpeg)
+
+-   现在前端不用 AJAX 也能拿到 posts 了
+-   这就是同构 SSR 的好处：后端数据可以直接传给前端
+-   前端 JSON.parse 一下子就能得到 posts
+(以上内容 next.js 已经帮我们做好了)
+
+难道 PHP/Java/Python 就不能吗
+- 也可以，思路一样
+- 但是不支持 JSX，不能与 React 无缝衔接
+- 而且他们的对象不能直接提供给 JS用，需要类型转换
+
+# 静态化的时机
+环境
+- 在**开发环境**，每次请求都会运行一次 getStaticProps 
+- 这是为了方便你修改代码重新运行
+- 在**生产环境**，getStaticProps 只在 build 时运行
+- 这样可以提供一份 HTML 给所有用户下载
+
+如何体验生产环境
+- 关掉 yarn dev
+- yarn build
+- yarn start
+
+打包之后
+λ  (Server)  SSR 不能自动创建 HTML（等会再说）
+○  (Static)  自动创建 HTML (发现你没用到 props)
+●  (SSG)     自动创建 HTML + JSON (等你用到 props)
+
+三种文件类型
+posts.html = posts.js + posts.json
+
+posts.html 含有静态内容，用于用户直接访问
+post.js 也含有静态内容，用于快速导航（与 HTML 对应）
+posts.json 含有数据，跟 posts.js 结合得到页面
+- 为什么不直接把数据放入 posts.js 呢？
+- 显然，是为了让 posts.js 接受不同的数据**
+- 当然，目前只能接受一个数据（来自 getStaticProps）
