@@ -881,6 +881,10 @@
     "@types/prop-types" "*"
     csstype "^2.2.0"
 
+"@types/ua-parser-js@^0.7.33":
+  version "0.7.33"
+  resolved "https://registry.npm.taobao.org/@types/ua-parser-js/download/@types/ua-parser-js-0.7.33.tgz#4a92089511574e12928a7cb6b99a01831acd1dd7"
+
 "@webassemblyjs/ast@1.9.0":
   version "1.9.0"
   resolved "https://registry.npm.taobao.org/@webassemblyjs/ast/download/@webassemblyjs/ast-1.9.0.tgz#bd850604b4042459a5a41cd7d338cbed695ed964"
@@ -4626,6 +4630,10 @@ typedarray@^0.0.6:
 typescript@^3.9.3:
   version "3.9.3"
   resolved "https://registry.npm.taobao.org/typescript/download/typescript-3.9.3.tgz?cache=0&sync_timestamp=1590909749407&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Ftypescript%2Fdownload%2Ftypescript-3.9.3.tgz#d3ac8883a97c26139e42df5e93eeece33d610b8a"
+
+ua-parser-js@^0.7.21:
+  version "0.7.21"
+  resolved "https://registry.npm.taobao.org/ua-parser-js/download/ua-parser-js-0.7.21.tgz#853cf9ce93f642f67174273cc34565ae6f308777"
 
 unicode-canonical-property-names-ecmascript@^1.0.4:
   version "1.0.4"

@@ -304,3 +304,57 @@ posts.json 含有数据，跟 posts.js 结合得到页面
 - 为什么不直接把数据放入 posts.js 呢？
 - 显然，是为了让 posts.js 接受不同的数据**
 - 当然，目前只能接受一个数据（来自 getStaticProps）
+
+# SSG 小结
+背景：如果动态内容与用户无关，那么可以提前静态化
+通过 getStaticProps 可以获取数据
+静态内容 + 数据（本地获取）就得到了完整页面
+代替了之前的 静态内容+动态数据（AJAX获取）
+
+时机
+静态化是在 yarn build 的时候实现的
+
+优点
+生产环境直接给出完整页面
+首屏不会白屏
+搜索引擎能看到页面内容（方便 SEO）
+
+# 如果页面跟用户相关呢？
+• 较难提前静态化
+    • 需要在用户请求时，获取用户信息，然后通过用户信息去数据库拿数据
+    • 如果硬要做，就要给每个用户创建一个页面
+    • 有时候这些数据更新极快，无法提前静态化
+    •  比如微博首页的信息流
+• 那怎么办？
+    • 要么客户端渲染，下拉更新
+    • 要么服务的渲染，下拉 AJAX 更新(没有白屏
+• 但这次的服务端渲染不能用 getStaticProps
+• 因为 getStaticProps 是在 build 时执行的
+• 可用 getServerSideProps(context: NextPageContext)
+
+  比如：根据用户不同浏览器展示不同的页面。
+  
+# getServerSideProps
+运行时机
+-   无论是开发环境还是生产环境
+-   都是在**请求到来之后运行** getServerSideProps
+
+回顾一下 getStaticProps
+-   开发环境，每次请求到来后运行，方便开发
+-   生产环境，**build 时运行**
+
+参数
+-   context，类型为 NextPageContext
+-   context.req/context.res 可以获取请求和响应
+-   一般只需要用到 context.req
+
+# 总结
+- 静态内容
+直接输出 HTML，没有术语
+- 动态内容
+术语：客户端渲染，通过 AJAX 请求，渲染成 HTML
+- 动态内容静态化
+术语：SSG，通过 getStaticProps 获取用户无关内容
+- 用户相关动态内容静态化
+术语：SSR，通过 getServerSideProps 获取请求
+缺点：无法获取客户端信息，如浏览器窗口大小
