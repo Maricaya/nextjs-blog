@@ -856,6 +856,11 @@
   version "1.1.1"
   resolved "https://registry.npm.taobao.org/@types/color-name/download/@types/color-name-1.1.1.tgz?cache=0&sync_timestamp=1588199606687&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fcolor-name%2Fdownload%2F%40types%2Fcolor-name-1.1.1.tgz#1c1261bbeaa10a8055bbc5d8ab84b7b2afc846a0"
 
+"@types/marked@^0.7.4":
+  version "0.7.4"
+  resolved "https://registry.npm.taobao.org/@types/marked/download/@types/marked-0.7.4.tgz#607685669bb1bbde2300bc58ba43486cbbee1f0a"
+  integrity sha1-YHaFZpuxu94jALxYukNIbLvuHwo=
+
 "@types/node@^14.0.6":
   version "14.0.6"
   resolved "https://registry.npm.taobao.org/@types/node/download/@types/node-14.0.6.tgz?cache=0&sync_timestamp=1590801806103&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.0.6.tgz#f9e178b2da31a4b0ec60b64649e244c31ce18daf"
@@ -2944,6 +2949,11 @@ map-visit@^1.0.0:
   resolved "https://registry.npm.taobao.org/map-visit/download/map-visit-1.0.0.tgz#ecdca8f13144e660f1b5bd41f12f3479d98dfb8f"
   dependencies:
     object-visit "^1.0.0"
+
+marked@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.npm.taobao.org/marked/download/marked-1.1.0.tgz#62504ad4d11550c942935ccc5e39d64e5a4c4e50"
+  integrity sha1-YlBK1NEVUMlCk1zMXjnWTlpMTlA=
 
 md5.js@^1.3.4:
   version "1.3.5"

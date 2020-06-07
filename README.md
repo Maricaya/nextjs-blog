@@ -131,7 +131,6 @@ export const getPosts = async () => {
     const x = fileNames.map(fileName => {
         const fullPath = path.join(markdownDir, fileName);
         const id = fileName.replace(fullPath, '');
-        console.log('fullPath');
         const text = fs.readFileSync(fullPath, 'utf8');
         const {data: {title, date}, content} = matter(text);
         return {
@@ -358,3 +357,15 @@ posts.json 含有数据，跟 posts.js 结合得到页面
 - 用户相关动态内容静态化
 术语：SSR，通过 getServerSideProps 获取请求
 缺点：无法获取客户端信息，如浏览器窗口大小
+
+# 完成点击 posts 列表查看文章功能
+- 加个 Link>a 标签 嘛
+
+## [id].tsx
+- 步骤
+实现 PostsShow, 从 props 接收 post 数据
+实现 getStaticProps, 从第一个参数接收 params.id
+实现 getStaticPaths, 返回 id 列表
+
+- 优化 md 文档样式
+yarn add marked

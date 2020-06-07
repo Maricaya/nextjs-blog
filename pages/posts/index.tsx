@@ -1,39 +1,36 @@
-import {GetServerSideProps, NextPage} from 'next';
-import {UAParser} from 'ua-parser-js';
 import * as React from "react";
-import {useEffect, useState} from "react";
+import {getPosts} from "../../lib/post";
+import Link from 'next/link';
+import {NextPage} from 'next';
 
 type Props = {
-    browser: {
-        name: string
-    }
+  posts: Post[]
 }
 
-const index: NextPage<Props> = (props) => {
-    const {browser} = props;
-    const [width, setWidth] = useState(0);
-
-    useEffect(() => {
-        const w = document.documentElement.clientWidth;
-        setWidth(w);
-    }, []);
-
-    return (
-        <div>
-            <h1>你的浏览器是 {browser.name}</h1>
-            <h1>你的浏览器窗口大小是 {width} 像素</h1>
-        </div>
-    )
+const PostsIndex: NextPage<Props> = (props) => {
+  const {posts} = props;
+  return (
+    <div>
+      <h1>文章列表</h1>
+      {posts.map(p => <div key={p.id}>
+        <Link href={`/posts/${p.id}`}>
+          <a>
+            {p.id}
+          </a>
+        </Link>
+      </div>)}
+    </div>
+  )
 };
 
-export default index;
+export default PostsIndex;
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
-    const ua = context.req.headers['user-agent'];
-    const result = new UAParser(ua).getResult();
-    return {
-        props: {
-            browser: result.browser
-        }
+export const getStaticProps = async () => {
+  const posts = await getPosts();
+  console.log('posts', posts)
+  return {
+    props: {
+      posts: JSON.parse(JSON.stringify(posts))
     }
+  }
 };
