@@ -369,3 +369,14 @@ posts.json 含有数据，跟 posts.js 结合得到页面
 
 - 优化 md 文档样式
 yarn add marked
+
+# 如何运行 TypeScript
+- Next.js 默认使用 babel 来将 TS 编译为 JS（内置功能）
+- TypeORM 推荐使用 ts-node 来编译（没有内置）
+- babel 和 ts-node 对 TS 的支持并非完全一致
+- 所以我们必须进行统一，全部都用 babel
+
+# 做法
+yarn add @babel/cli  
+npx babel ./src --out-dir dist --extensions ".ts,.tsx"
+yarn add --dev @babel/plugin-proposal-decorators
