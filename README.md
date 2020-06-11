@@ -370,6 +370,21 @@ posts.json 含有数据，跟 posts.js 结合得到页面
 - 优化 md 文档样式
 yarn add marked
 
+# 启动 docker
+docker run -v "$PWD/blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:12.2
+
+docker ps
+查找到容器id值
+
+docker exec -it 容器id（前3位） bash
+
+进入pg命令行
+psql -U blog -W
+
+执行pg命令
+创建数据库
+CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
+
 # 如何运行 TypeScript
 - Next.js 默认使用 babel 来将 TS 编译为 JS（内置功能）
 - TypeORM 推荐使用 ts-node 来编译（没有内置）
@@ -378,5 +393,8 @@ yarn add marked
 
 # 做法
 yarn add @babel/cli  
+打包
 npx babel ./src --out-dir dist --extensions ".ts,.tsx"
 yarn add --dev @babel/plugin-proposal-decorators
+
+# 如何编译 ts 代码
