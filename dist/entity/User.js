@@ -21,7 +21,7 @@ var _typeorm = require("typeorm");
 
 var _dec, _dec2, _dec3, _dec4, _dec5, _class, _class2, _descriptor, _descriptor2, _descriptor3, _descriptor4, _temp;
 
-var User = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)(), _dec4 = (0, _typeorm.Column)(), _dec5 = (0, _typeorm.Column)(), _dec(_class = (_class2 = (_temp = function User() {
+var User = (_dec = (0, _typeorm.Entity)(), _dec2 = (0, _typeorm.PrimaryGeneratedColumn)(), _dec3 = (0, _typeorm.Column)('text'), _dec4 = (0, _typeorm.Column)('text'), _dec5 = (0, _typeorm.Column)('int'), _dec(_class = (_class2 = (_temp = function User() {
   (0, _classCallCheck2["default"])(this, User);
   (0, _initializerDefineProperty2["default"])(this, "id", _descriptor, this);
   (0, _initializerDefineProperty2["default"])(this, "firstName", _descriptor2, this);

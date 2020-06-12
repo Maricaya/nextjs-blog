@@ -417,3 +417,10 @@ yarn add --dev @babel/plugin-proposal-decorators
 "synchronize": false
 如果为 true，那么在连接数据库时，typeorm会自动根据entity目录来修改数据表
 假设entity里面有User，就会自动创建User表
+
+# 创建表（通过 migration）
+ \c blog_development 连接 数据库
+
+- posts表
+npx typeorm migration:create -n CreatePost
+得到 src/migrations/{TIMESTAMP}-CreatePost.ts
