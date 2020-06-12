@@ -3,10 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev & babel -w ./src --out-dir dist --extensions .ts,.tsx",
+    "dev": "concurrently \"next dev\" \"babel -w ./src --out-dir dist --extensions .ts,.tsx\"",
     "build": "next build",
     "start": "next start",
-    "typeorm:build": "",
     "migration:run": "typeorm migration:run",
     "migration:revert": "typeorm migration:revert"
   },
@@ -32,6 +31,7 @@
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
     "@types/ua-parser-js": "^0.7.33",
+    "concurrently": "^5.2.0",
     "file-loader": "^6.0.0",
     "typescript": "^3.9.3"
   }
