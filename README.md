@@ -397,4 +397,23 @@ yarn add @babel/cli
 npx babel ./src --out-dir dist --extensions ".ts,.tsx"
 yarn add --dev @babel/plugin-proposal-decorators
 
-# 如何编译 ts 代码
+# 链接数据库
+-   步骤
+选做：升级 Node.js 到 v14
+安装 @babel/cli
+npx babel ./src --out-dir dist --extensions ".ts,.tsx"
+根据错误提示搜索答案
+yarn add --dev @babel/plugin-proposal-decorators
+去 Next.js 官网查看 .babelrc 默认配置，复制
+创建 .babelrc，添加插件
+重新运行刚刚失败的命令
+得到 dist 里面的 JS，运行 node dist/index.js
+根据错误提示再加上数小时的搜索，修改 ormconfig
+重新运行 node dist/index.js
+成功看见 connection 对象即为成功
+
+# 重要配置：禁用 sync
+-   ormconfig
+"synchronize": false
+如果为 true，那么在连接数据库时，typeorm会自动根据entity目录来修改数据表
+假设entity里面有User，就会自动创建User表

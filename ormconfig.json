@@ -5,7 +5,7 @@
    "username": "blog",
    "password": "",
    "database": "blog_development",
-   "synchronize": true,
+   "synchronize": false,
    "logging": false,
    "entities": [
       "dist/entity/**/*.ts"
