@@ -424,3 +424,24 @@ yarn add --dev @babel/plugin-proposal-decorators
 - posts表
 npx typeorm migration:create -n CreatePost
 得到 src/migrations/{TIMESTAMP}-CreatePost.ts
+
+# 数据映射到实体
+- 背景
+刚刚只是在数据库里创建了 Post，代码如何读写 Post 呢
+答案: 将数据映射到 Entity（实体）
+命令：typeorm entity:create -n Post
+
+- 知识点
+@PrimaryGeneratedColumn('increment')
+@Column('varchar')
+@Column('text')
+
+- 如何使用实体
+EntityManager 或 Repository
+
+# 总结
+- migration 数据迁移
+- entity 实体
+- connection 连接
+- manager / repo
+
