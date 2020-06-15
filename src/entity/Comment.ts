@@ -3,7 +3,6 @@ import {
     CreateDateColumn,
     Entity,
     ManyToOne,
-    OneToMany,
     PrimaryGeneratedColumn,
     UpdateDateColumn
 } from "typeorm";
@@ -16,9 +15,9 @@ export class Comment {
     id: number;
     @Column('text')
     content: string;
-    @CreateDateColumn('time')
+    @CreateDateColumn()
     createdAt: Date;
-    @UpdateDateColumn('time')
+    @UpdateDateColumn()
     updateAt: Date;
     @ManyToOne(type => User, user => user.comments)
     user: User;
