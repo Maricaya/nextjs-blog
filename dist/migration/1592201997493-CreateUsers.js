@@ -30,7 +30,8 @@ var CreateUsers1592201997493 = /*#__PURE__*/function () {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                queryRunner.createTable(new _typeorm.Table({
+                _context.next = 2;
+                return queryRunner.createTable(new _typeorm.Table({
                   name: 'users',
                   columns: [{
                     name: 'id',
@@ -47,7 +48,10 @@ var CreateUsers1592201997493 = /*#__PURE__*/function () {
                   }]
                 }));
 
-              case 1:
+              case 2:
+                return _context.abrupt("return", _context.sent);
+
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -69,9 +73,13 @@ var CreateUsers1592201997493 = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                queryRunner.dropTable('users');
+                _context2.next = 2;
+                return queryRunner.dropTable('users');
 
-              case 1:
+              case 2:
+                return _context2.abrupt("return", _context2.sent);
+
+              case 3:
               case "end":
                 return _context2.stop();
             }
