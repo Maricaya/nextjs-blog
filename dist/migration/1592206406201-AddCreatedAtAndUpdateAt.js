@@ -93,44 +93,35 @@ var AddCreatedAtAndUpdateAt1592206406201 = /*#__PURE__*/function () {
           while (1) {
             switch (_context2.prev = _context2.next) {
               case 0:
-                _context2.prev = 0;
-                _context2.next = 3;
+                _context2.next = 2;
                 return queryRunner.dropColumn('users', 'createdAt');
 
-              case 3:
-                _context2.next = 5;
+              case 2:
+                _context2.next = 4;
                 return queryRunner.dropColumn('users', 'updateAt');
 
-              case 5:
-                _context2.next = 7;
+              case 4:
+                _context2.next = 6;
                 return queryRunner.dropColumn('posts', 'createdAt');
 
-              case 7:
-                _context2.next = 9;
+              case 6:
+                _context2.next = 8;
                 return queryRunner.dropColumn('posts', 'updateAt');
 
-              case 9:
-                _context2.next = 11;
+              case 8:
+                _context2.next = 10;
                 return queryRunner.dropColumn('comments', 'createdAt');
 
-              case 11:
-                _context2.next = 13;
+              case 10:
+                _context2.next = 12;
                 return queryRunner.dropColumn('comments', 'updateAt');
 
-              case 13:
-                _context2.next = 17;
-                break;
-
-              case 15:
-                _context2.prev = 15;
-                _context2.t0 = _context2["catch"](0);
-
-              case 17:
+              case 12:
               case "end":
                 return _context2.stop();
             }
           }
-        }, _callee2, null, [[0, 15]]);
+        }, _callee2);
       }));
 
       function down(_x2) {
