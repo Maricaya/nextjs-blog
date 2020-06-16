@@ -1,5 +1,6 @@
+# 启动项目
 ## 启动数据库
-mac/linux
+mac/linux/windows 新版 docker
 ```bash
 mkdir blog-data
 docker run -v "$PWD/blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:12.2
@@ -8,12 +9,40 @@ windows toolbox
 ```bash
 docker run -v "blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:12.2
 ```
+## 清空之前的开发环境
+```bash
+docker ps
+docker kill 容器id
+docker rm 容器id
 
+rm -rf blog-data 
+# mac & linux & windows 新版docker
+# 或 windows toolbox
+docker container prune 
+docker volume rm blog-data
+```
 ## 创建数据库
 ```bash
+docker exit -it 容器id bash
+psql -U blog -W
 CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
 ```
-
+## 数据库
+首先修改 ormconfig.json 中的 host，然后运行
+```bash
+yarn m:run
+node dist/seed.js
+```
+## 开发
+```bash
+yarn dev
+```
+## 部署
+```bash
+yarn build
+yarn start
+```
+----------------------以下是项目创建过程----------------------
 # 起步
 
 ```bash
