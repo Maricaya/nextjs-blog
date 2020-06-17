@@ -2,28 +2,20 @@ import {GetServerSideProps, NextPage} from 'next';
 import {UAParser} from 'ua-parser-js';
 import * as React from "react";
 import {useEffect, useState} from "react";
-import {getConnection} from "typeorm";
 import {getDatabaseConnection} from "../lib/getDatabaseConnection";
+import {Post} from "../src/entity/Post";
 
 type Props = {
-    browser: {
-        name: string
-    }
+    posts: Post[]
 }
 
 const index: NextPage<Props> = (props) => {
-    const {browser} = props;
-    const [width, setWidth] = useState(0);
-
-    useEffect(() => {
-        const w = document.documentElement.clientWidth;
-        setWidth(w);
-    }, []);
-
+    const {posts} = props;
     return (
         <div>
-            <h1>你的浏览器是 {browser.name}</h1>
-            <h1>你的浏览器窗口大小是 {width} 像素</h1>
+            {posts.map(post =>
+                <div key={post.id}>{post.title}</div>
+            )}
         </div>
     )
 };
@@ -31,13 +23,11 @@ const index: NextPage<Props> = (props) => {
 export default index;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
-    const connect = await getDatabaseConnection();
-    console.log('connect', connect);
-    const ua = context.req.headers['user-agent'];
-    const result = new UAParser(ua).getResult();
+    const connection = await getDatabaseConnection();
+    const posts = await connection.manager.find(Post);
     return {
         props: {
-            browser: result.browser
+            posts: JSON.parse(JSON.stringify(posts))
         }
     }
 };

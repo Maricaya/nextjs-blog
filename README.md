@@ -491,3 +491,10 @@ EntityManager 或 Repository
 - manager / repo
 
 # seed 数据填充
+
+# 解决最难的问题
+1. createConnection 第二遍会报错
+2. getConnection 第一遍会报错
+3. create x 1 + get x n 保存时会触发create 
+4. typeorm getConnectionManager 处于 node_modules，保存时不会重新触发
+5. 自己写mananger没用ctrl+s 触发 manager 还原
