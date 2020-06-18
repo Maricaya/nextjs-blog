@@ -17,6 +17,7 @@
     "axios": "^0.19.2",
     "gray-matter": "^4.0.2",
     "marked": "^1.1.0",
+    "md5": "^2.2.1",
     "next": "9.4.1",
     "next-images": "^1.4.0",
     "pg": "^8.2.1",
@@ -29,6 +30,7 @@
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.10.1",
     "@types/marked": "^0.7.4",
+    "@types/md5": "^2.2.0",
     "@types/node": "^14.0.11",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
