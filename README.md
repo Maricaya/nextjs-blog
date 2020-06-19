@@ -23,7 +23,7 @@ docker volume rm blog-data
 ```
 ## 创建数据库
 ```bash
-docker exit -it 容器id bash
+docker exec -it 容器id bash
 psql -U blog -W
 CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
 ```
