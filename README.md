@@ -7,7 +7,14 @@ docker run -v "$PWD/blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES
 ```
 windows toolbox
 ```bash
+docker-machine run default/ 假设默认是您的Linux VM /
+
+docker-machine ssh default
+
 docker run -v "blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:12.2
+
+sudo sed -i "s|EXTRA_ARGS='|EXTRA_ARGS='--registry-mirror=https://2gbsanfp.mirror.aliyuncs.com |g" /var/lib/boot2docker/profile
+
 ```
 ## 清空之前的开发环境
 ```bash
@@ -28,7 +35,9 @@ psql -U blog -W
 CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYPE 'en_US.utf8';
 ```
 ## 数据库
-首先修改 ormconfig.json 中的 host，然后运行
+首先ToolBox 需要修改 ormconfig.json 中的 host，
+在控制台输入 docker-machine.exe ip, host 修改为这个值
+然后运行
 ```bash
 yarn m:run
 node dist/seed.js
