@@ -27,7 +27,6 @@ export default PostsIndex;
 
 export const getStaticProps = async () => {
   const posts = await getPosts();
-  console.log('posts', posts)
   return {
     props: {
       posts: JSON.parse(JSON.stringify(posts))
