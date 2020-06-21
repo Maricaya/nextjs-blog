@@ -905,6 +905,11 @@
   version "7.0.5"
   resolved "https://registry.npm.taobao.org/@types/json-schema/download/@types/json-schema-7.0.5.tgz#dcce4430e64b443ba8945f0290fb564ad5bac6dd"
 
+"@types/lodash@^4.14.155":
+  version "4.14.155"
+  resolved "https://registry.npm.taobao.org/@types/lodash/download/@types/lodash-4.14.155.tgz#e2b4514f46a261fd11542e47519c20ebce7bc23a"
+  integrity sha1-4rRRT0aiYf0RVC5HUZwg6857wjo=
+
 "@types/marked@^0.7.4":
   version "0.7.4"
   resolved "https://registry.npm.taobao.org/@types/marked/download/@types/marked-0.7.4.tgz#607685669bb1bbde2300bc58ba43486cbbee1f0a"

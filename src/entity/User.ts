@@ -6,8 +6,8 @@ import {
     PrimaryGeneratedColumn,
     OneToMany, BeforeInsert
 } from 'typeorm';
-import {Post} from "./Post";
-import {Comment} from "./Comment";
+import {Post} from './Post';
+import {Comment} from './Comment';
 import {getDatabaseConnection} from '../../lib/getDatabaseConnection';
 import md5 from 'md5';
 import _ from 'lodash';
@@ -28,12 +28,15 @@ export class User {
     posts: Post[];
     @OneToMany(type => Comment, comment => comment.user)
     comments: Comment[];
-
-    errors = {username: [] as string[], password: [] as string [], passwordConfirmation: [] as string[]};
-    // 这两个字段不是数据库上的,但是是类
+    errors = {
+        username: [] as string[],
+        password: [] as string[],
+        passwordConfirmation: [] as string[]
+    };
     password: string;
     passwordConfirmation: string;
-    async validate () {
+
+    async validate() {
         if (this.username.trim() === '') {
             this.errors.username.push('不能为空');
         }
@@ -41,32 +44,34 @@ export class User {
             this.errors.username.push('格式不合法');
         }
         if (this.username.trim().length > 42) {
-            this.errors.username.push('太长')
+            this.errors.username.push('太长');
         }
-
+        if (this.username.trim().length <= 3) {
+            this.errors.username.push('太短');
+        }
         const found = await (await getDatabaseConnection()).manager.find(
           User, {username: this.username});
         if (found.length > 0) {
-            this.errors.username.push('已存在，不能重复注册')
+            this.errors.username.push('已存在，不能重复注册');
         }
-
         if (this.password === '') {
-            this.errors.password.push('不能为空')
+            this.errors.password.push('不能为空');
         }
         if (this.password !== this.passwordConfirmation) {
             this.errors.passwordConfirmation.push('密码不匹配');
         }
     }
-    hasErrors () {
-        return  !!Object.values(this.errors).find(v => v.length > 0);
+
+    hasErrors() {
+        return !!Object.values(this.errors).find(v => v.length > 0);
     }
 
     @BeforeInsert()
-    generatePasswordDigest () {
-        this.passwordDigest = md5(this.password)
+    generatePasswordDigest() {
+        this.passwordDigest = md5(this.password);
     }
 
-    toJSON () {
-        return _.omit(this, ['password', 'passwordConfirmation', 'passwordDigest', 'errors'])
+    toJSON() {
+        return _.omit(this, ['password', 'passwordConfirmation', 'passwordDigest', 'errors']);
     }
 }

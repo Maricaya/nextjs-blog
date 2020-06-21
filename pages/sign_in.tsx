@@ -1,9 +1,8 @@
 import {NextPage} from "next";
 import * as React from "react";
 import {useCallback, useState} from "react";
-import axios, {AxiosResponse} from 'axios';
-
-const signUp: NextPage = () => {
+import axios, {AxiosResponse} from 'axios'
+const signIn: NextPage = () => {
     const [formData, setFormData] = useState({
         username: '',
         password: '',
@@ -14,9 +13,12 @@ const signUp: NextPage = () => {
     });
     const onSubmit = useCallback((e) => {
         e.preventDefault();
-        axios.post(`/api/v1/users`, formData)
+        setErrors({
+            username: [], password: [], passwordConfirmation: []
+        });
+        axios.post(`/api/v1/sessions`, formData)
             .then(() => {
-                window.alert('注册成功')
+                window.alert('登录成功')
                 window.location.href = '/sign_in';
             }, (error) => {
                 if (error.response) {
@@ -29,7 +31,8 @@ const signUp: NextPage = () => {
     }, [formData]);
     return (
         <div>
-            <h1>注册</h1>
+            <h1>登录</h1>
+
             <form onSubmit={onSubmit}>
                 <div>
                     <label>用户名
@@ -58,23 +61,11 @@ const signUp: NextPage = () => {
                 </div>
 
                 <div>
-                    <label>确认密码
-                        <input type="password" value={formData.passwordConfirmation}
-                        onChange={e => setFormData({
-                            ...formData,
-                            passwordConfirmation: e.target.value
-                        })}/>
-                    </label>
-                    {errors.passwordConfirmation?.length > 0 && <div>
-                        {errors.passwordConfirmation.join(',')}
-                    </div>}
-                </div>
-                <div>
-                    <button type="submit">注册</button>
+                    <button type="submit">登录</button>
                 </div>
             </form>
         </div>
     )
 };
 
-export default signUp;
+export default signIn;
