@@ -14,7 +14,7 @@ docker-machine ssh default
 
 docker run -v "blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER=blog -e POSTGRES_HOST_AUTH_METHOD=trust -d postgres:12.2
 
-sudo sed -i "s|EXTRA_ARGS='|EXTRA_ARGS='--registry-mirror=https://2gbsanfp.mirror.aliyuncs.com |g" /var/lib/boot2docker/profile
+sudo sed -i "s|EXTRA_ARGS='|EXTRA_ARGS='--registry-mirror=https://xxxx.mirror.aliyuncs.com |g" /var/lib/boot2docker/profile
 ```
 ## 清空之前的开发环境
 ```bash
@@ -507,3 +507,7 @@ EntityManager 或 Repository
 3. create x 1 + get x n 保存时会触发create 
 4. typeorm getConnectionManager 处于 node_modules，保存时不会重新触发
 5. 自己写mananger没用ctrl+s 触发 manager 还原
+
+# 图解 session
+
+# 如何在代码中隐藏 密码/秘钥
