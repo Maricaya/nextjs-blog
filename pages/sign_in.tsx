@@ -35,41 +35,24 @@ const SignIn: NextPage<{ user: User }> = (props) => {
                 }
             });
     }, [formData]);
+    const onChange = useCallback((key, value) => {
+        setFormData({...formData, [key]: value})
+    }, [formData]);
     return (
         <>
             {props.user && <div>当前登录用户为 {props.user.username}</div>}
             <h1>登录</h1>
-            <form onSubmit={onSubmit}>
-                <div>
-                    <label>用户名
-                        <input type="text" value={formData.username}
-                               onChange={e => setFormData({
-                                   ...formData,
-                                   username: e.target.value
-                               })}/>
-                    </label>
-                    {errors.username?.length > 0 && <div>
-                        {errors.username.join(',')}
-                    </div>}
-                </div>
-
-                <div>
-                    <label>密码
-                        <input type="password" value={formData.password}
-                               onChange={e => setFormData({
-                                   ...formData,
-                                   password: e.target.value
-                               })}/>
-                    </label>
-                    {errors.password?.length > 0 && <div>
-                        {errors.password.join(',')}
-                    </div>}
-                </div>
-
-                <div>
-                    <button type="submit">登录</button>
-                </div>
-            </form>
+            <Form fields={[
+                {label: '用户名', type: 'text', value: formData.username,
+                    onChange: e => onChange('username', e.target.value), errors: errors.username},
+                {label: '密码', type: 'password', value: formData.password,
+                    onChange: e => onChange('password', e.target.value), errors: errors.password},
+                {label: '确认密码', type: 'password', value: formData.passwordConfirmation,
+                    onChange: e => onChange('passwordConfirmation', e.target.value), errors: errors.passwordConfirmation}
+            ]} onSubmit={onSubmit} buttons={
+                <button type="submit">登录</button>
+            }
+            />
         </>
     );
 };

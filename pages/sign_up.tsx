@@ -32,7 +32,7 @@ const signUp: NextPage = () => {
         setFormData({...formData, [key]: value})
     }, [formData]);
     return (
-        <div>
+        <>
             <h1>注册</h1>
             <Form fields={[
             {label: '用户名', type: 'text', value: formData.username,
@@ -43,7 +43,7 @@ const signUp: NextPage = () => {
                 <button type="submit">注册</button>
             }
             />
-        </div>
+        </>
     )
 };
 
