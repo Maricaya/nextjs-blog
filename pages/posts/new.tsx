@@ -1,12 +1,11 @@
 import {NextPage} from 'next';
-import React from 'react';
+import * as React from 'react';
 
 const PostsNew: NextPage = () => {
-  return (
-    <div>
-      <form></form>
-    </div>
-  )
+    return (
+        <div>
+            PostsNew
+        </div>)
 };
 
 export default PostsNew;

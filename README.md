@@ -513,3 +513,5 @@ EntityManager 或 Repository
 # 如何在代码中隐藏 密码/秘钥
 
 # 博客的增删改查
+
+# 软件 Cypress 进行自动化测试
