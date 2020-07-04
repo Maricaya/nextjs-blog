@@ -2,8 +2,6 @@
 // 因为不知道 T 是什么，
 import {ReactChild, useCallback, useState} from 'react';
 import * as React from 'react';
-import {Simulate} from 'react-dom/test-utils';
-import submit = Simulate.submit;
 import {AxiosResponse} from 'axios';
 
 type Field<T> = {
@@ -54,11 +52,12 @@ export function useForm<T>(options: useFormOptions<T>) {
     const form = (
         <form onSubmit={_onSubmit}>
             {fields.map(field =>
-                <div>
+                <div key={field.key.toString()}>
                     <label>{field.label}
                         {field.type === 'textarea'
                             ? <textarea
-                                onChange={(e) => onChange(field.key, e.target.value)}>{formData[field.key]}</textarea>
+                                onChange={(e) => onChange(field.key, e.target.value)}
+                                value={formData[field.key].toString()}/>
                             : <input type={field.type} value={formData[field.key].toString()}
                                      onChange={(e) => onChange(field.key, e.target.value)}/>}
                     </label>

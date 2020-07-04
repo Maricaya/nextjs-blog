@@ -1,9 +1,9 @@
-import {NextApiHandler} from "next";
-import {getDatabaseConnection} from "../../../lib/getDatabaseConnection";
-import {User} from "src/entity/User";
-import md5 from "md5";
+import {NextApiHandler} from 'next';
+import {getDatabaseConnection} from '../../../lib/getDatabaseConnection';
+import {User} from 'src/entity/User';
+import md5 from 'md5';
 
-const Users: NextApiHandler =  async (req, res) => {
+const Users: NextApiHandler = async (req, res) => {
     const {username, password, passwordConfirmation} = req.body;
     const connection = await getDatabaseConnection();
 
@@ -12,7 +12,7 @@ const Users: NextApiHandler =  async (req, res) => {
     user.password = password;
     user.passwordConfirmation = passwordConfirmation;
 
-    await user.validate()
+    await user.validate();
 
     res.setHeader('Content-Type', 'application/json; charset=utf-8');
 
@@ -29,4 +29,4 @@ const Users: NextApiHandler =  async (req, res) => {
     res.end();
 };
 
-export default Users
+export default Users;

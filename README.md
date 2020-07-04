@@ -17,13 +17,14 @@ docker run -v "blog-data":/var/lib/postgresql/data -p 5432:5432 -e POSTGRES_USER
 sudo sed -i "s|EXTRA_ARGS='|EXTRA_ARGS='--registry-mirror=https://xxxx.mirror.aliyuncs.com |g" /var/lib/boot2docker/profile
 ```
 ## 清空之前的开发环境
+# mac & linux & windows 新版docker
 ```bash
 docker ps
 docker kill 容器id
 docker rm 容器id
 
 rm -rf blog-data 
-# mac & linux & windows 新版docker
+
 # 或 windows toolbox
 docker container prune 
 docker volume rm blog-data
@@ -37,11 +38,15 @@ CREATE DATABASE blog_development ENCODING 'UTF8' LC_COLLATE 'en_US.utf8' LC_CTYP
 ## 数据库
 首先ToolBox 需要修改 ormconfig.json 中的 host，
 在控制台输入 docker-machine.exe ip, host 修改为这个值
+
+由于我们使用了 TypeScript + typeorm，需要在 User.ts 中，删去 getDatabaseConnection 相关代码。
 然后运行
 ```bash
 yarn m:run
-node dist/seed.jsyarn --version
+node dist/seed.js
 ```
+不然会报错
+
 ## 开发
 ```bash 
 yarn dev

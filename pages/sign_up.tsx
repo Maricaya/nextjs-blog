@@ -10,8 +10,8 @@ const signUp: NextPage = () => {
             passwordConfirmation: ''},
         fields: [
             {label: '用户名', type: 'text', key: 'username'},
-            {label: '密码', type: 'text', key: 'password'},
-            {label: '确认密码', type: 'text', key: 'passwordConfirmation'}
+            {label: '密码', type: 'password', key: 'password'},
+            {label: '确认密码', type: 'password', key: 'passwordConfirmation'}
         ],
         buttons: <button type="submit">注册</button>,
         submit: {

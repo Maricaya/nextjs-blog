@@ -16,6 +16,8 @@ var _Post = require("./entity/Post");
 
 var _Comment = require("./entity/Comment");
 
+var _md = _interopRequireDefault(require("md5"));
+
 (0, _typeorm.createConnection)().then( /*#__PURE__*/function () {
   var _ref = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee(connection) {
     var manager, u1, p1, c1;
@@ -26,8 +28,9 @@ var _Comment = require("./entity/Comment");
             manager = connection.manager; // 创建 user1
 
             u1 = new _User.User();
-            u1.username = 'frank';
-            u1.passwordDigest = 'xxx';
+            u1.username = 'frank'; // u1.passwordDigest = 'xxx123';
+
+            u1.passwordDigest = (0, _md["default"])('xxx123');
             _context.next = 6;
             return manager.save(u1);
 
@@ -49,10 +52,13 @@ var _Comment = require("./entity/Comment");
             return manager.save(c1);
 
           case 18:
-            connection.close();
-            console.log('OK!');
+            _context.next = 20;
+            return connection.close();
 
           case 20:
+            console.log('OK!');
+
+          case 21:
           case "end":
             return _context.stop();
         }

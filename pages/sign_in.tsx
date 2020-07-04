@@ -10,7 +10,7 @@ const SignIn: NextPage<{ user: User }> = (props) => {
         initFormData: { username: '', password: ''},
         fields: [
             {label: '用户名', type: 'text', key: 'username'},
-            {label: '密码', type: 'text', key: 'password'}
+            {label: '密码', type: 'password', key: 'password'}
         ],
         buttons: <button type="submit">登录</button>,
         submit: {
