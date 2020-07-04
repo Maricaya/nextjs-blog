@@ -25,6 +25,8 @@ var _initializerWarningHelper2 = _interopRequireDefault(require("@babel/runtime/
 
 var _typeorm = require("typeorm");
 
+var _getDatabaseConnection = require("../../lib/getDatabaseConnection");
+
 var _md = _interopRequireDefault(require("md5"));
 
 var _lodash = _interopRequireDefault(require("lodash"));
@@ -54,6 +56,7 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
     key: "validate",
     value: function () {
       var _validate = (0, _asyncToGenerator2["default"])( /*#__PURE__*/_regenerator["default"].mark(function _callee() {
+        var found;
         return _regenerator["default"].wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -72,12 +75,23 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
 
                 if (this.username.trim().length <= 3) {
                   this.errors.username.push('太短');
-                } // const found = await (await getDatabaseConnection()).manager.find(
-                //   User, {username: this.username});
-                // if (found.length > 0) {
-                //     this.errors.username.push('已存在，不能重复注册');
-                // }
+                }
 
+                _context.next = 6;
+                return (0, _getDatabaseConnection.getDatabaseConnection)();
+
+              case 6:
+                _context.next = 8;
+                return _context.sent.manager.find(User, {
+                  username: this.username
+                });
+
+              case 8:
+                found = _context.sent;
+
+                if (found.length > 0) {
+                  this.errors.username.push('已存在，不能重复注册');
+                }
 
                 if (this.password === '') {
                   this.errors.password.push('不能为空');
@@ -87,7 +101,7 @@ var User = (_dec = (0, _typeorm.Entity)('users'), _dec2 = (0, _typeorm.PrimaryGe
                   this.errors.passwordConfirmation.push('密码不匹配');
                 }
 
-              case 6:
+              case 12:
               case "end":
                 return _context.stop();
             }
