@@ -2,6 +2,9 @@
 // 因为不知道 T 是什么，
 import {ReactChild, useCallback, useState} from 'react';
 import * as React from 'react';
+import {Simulate} from 'react-dom/test-utils';
+import submit = Simulate.submit;
+import {AxiosResponse} from 'axios';
 
 type Field<T> = {
     label: string,
@@ -13,12 +16,15 @@ type useFormOptions<T> = {
     initFormData: T;
     fields: Field<T>[];
     buttons: ReactChild;
-    onSubmit: (fd: T) => void;
+    submit: {
+        request: (formData: T) => Promise<AxiosResponse<T>>;
+        message: string;
+    }
 }
 
 export function useForm<T>(options: useFormOptions<T>) {
     // 非受控
-    const {initFormData, fields, buttons, onSubmit} = options;
+    const {initFormData, fields, buttons, submit} = options;
     const [formData, setFormData] = useState(initFormData);
     const [errors, setErrors] = useState(() => {
         const e: { [k in keyof T]?: string[] } = {};
@@ -33,8 +39,17 @@ export function useForm<T>(options: useFormOptions<T>) {
 
     const _onSubmit = useCallback((e) => {
         e.preventDefault();
-        onSubmit(formData);
-    }, [onSubmit, formData]);
+        submit.request(formData).then(() => {
+            window.alert(submit.message);
+        }, (error) => {
+            if (error.response) {
+                const response: AxiosResponse = error.response;
+                if (response.status === 422) {
+                    setErrors(response.data);
+                }
+            }
+        });
+    }, [submit, formData]);
 
     const form = (
         <form onSubmit={_onSubmit}>
