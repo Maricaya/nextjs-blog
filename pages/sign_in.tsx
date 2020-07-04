@@ -1,26 +1,19 @@
 import {GetServerSideProps, GetServerSidePropsContext, NextPage} from 'next';
 import * as React from "react";
-import {useCallback, useState} from "react";
 import axios, {AxiosResponse} from 'axios'
-import {getDatabaseConnection} from '../lib/getDatabaseConnection';
-import {Post} from '../src/entity/Post';
 import {withSession} from '../lib/withSession';
 import {User} from '../src/entity/User';
-import {Form} from '../components/Form';
+import {useForm} from '../hooks/useForm';
 
 const SignIn: NextPage<{ user: User }> = (props) => {
-    const [formData, setFormData] = useState({
+    const initFormData = {
         username: '',
-        password: '',
-        passwordConfirmation: ''
-    });
-    const [errors, setErrors] = useState({
-        username: [], password: [], passwordConfirmation: []
-    });
-    const onSubmit = useCallback((e) => {
-        e.preventDefault();
+        password: ''
+    };
+
+    const onSubmit = (formData: typeof initFormData) => {
         setErrors({
-            username: [], password: [], passwordConfirmation: []
+            username: [], password: []
         });
         axios.post(`/api/v1/sessions`, formData)
             .then(() => {
@@ -34,25 +27,21 @@ const SignIn: NextPage<{ user: User }> = (props) => {
                     }
                 }
             });
-    }, [formData]);
-    const onChange = useCallback((key, value) => {
-        setFormData({...formData, [key]: value})
-    }, [formData]);
+    };
+    const {form, setErrors} = useForm({
+        initFormData,
+        fields: [
+            {label: '用户名', type: 'text', key: 'username'},
+            {label: '密码', type: 'text', key: 'password'}
+        ],
+        buttons: <button type="submit">登录</button>,
+        onSubmit
+    });
     return (
         <>
             {props.user && <div>当前登录用户为 {props.user.username}</div>}
             <h1>登录</h1>
-            <Form fields={[
-                {label: '用户名', type: 'text', value: formData.username,
-                    onChange: e => onChange('username', e.target.value), errors: errors.username},
-                {label: '密码', type: 'password', value: formData.password,
-                    onChange: e => onChange('password', e.target.value), errors: errors.password},
-                {label: '确认密码', type: 'password', value: formData.passwordConfirmation,
-                    onChange: e => onChange('passwordConfirmation', e.target.value), errors: errors.passwordConfirmation}
-            ]} onSubmit={onSubmit} buttons={
-                <button type="submit">登录</button>
-            }
-            />
+            {form}
         </>
     );
 };
