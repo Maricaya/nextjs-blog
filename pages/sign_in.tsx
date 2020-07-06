@@ -19,7 +19,6 @@ const SignIn: NextPage<{ user: User }> = (props) => {
             message: '登录成功'
         }
     });
-    // window.location.href = '/sign_in';
     return (
         <>
             {props.user && <div>当前登录用户为 {props.user.username}</div>}

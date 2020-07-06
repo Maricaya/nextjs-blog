@@ -25,7 +25,6 @@ export class Post {
     updateAt: Date;
     @ManyToOne('User', 'posts')
     author: User;
-    @Column('int')
     @OneToMany('Comment', 'post')
     comments: Comment[];
 }
