@@ -19,7 +19,6 @@ const signUp: NextPage = () => {
             success: () => window.alert('注册成功')
         }
     });
-    // window.location.href = '/sign_in';
     return (
         <>
             <h1>注册</h1>
