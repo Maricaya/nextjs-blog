@@ -5,16 +5,21 @@ import {Post} from 'src/entity/Post';
 import {getDatabaseConnection} from 'lib/getDatabaseConnection';
 import {UAParser} from 'ua-parser-js';
 import qs from 'querystring';
+import {usePager} from '../../hooks/usePager';
 
 type Props = {
     posts: Post[],
     count: number,
     perPage: number,
-    page: number
+    page: number,
+    totalPage: number
 }
 
 const PostsIndex: NextPage<Props> = (props) => {
-    const {posts} = props;
+    const {posts, count, page, totalPage} = props;
+    const {pager} = usePager({
+        page, totalPage
+    });
     return (
         <div>
             <h1>文章列表({props.count}) 每页{props.perPage}</h1>
@@ -26,14 +31,7 @@ const PostsIndex: NextPage<Props> = (props) => {
                 </div>
             )}
             <footer>
-                共{props.count}篇文章，当前是第{props.page} 页
-                <Link href={`?page=${props.page-1}`}>
-                    <a>上一页</a>
-                </Link>
-                |
-                <Link href={`?page=${props.page+1}`}>
-                    <a>下一页</a>
-                </Link>
+                {pager}
             </footer>
         </div>
     );
@@ -62,7 +60,8 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
             posts: JSON.parse(JSON.stringify(posts)),
             count,
             perPage,
-            page
+            page,
+            totalPage: Math.ceil(count / perPage)
         }
     };
 };
