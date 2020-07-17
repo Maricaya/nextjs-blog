@@ -7,7 +7,7 @@
 /.pnp
 .pnp.js
 /.env.local
-
+em.sh
 # testing
 /coverage
 
