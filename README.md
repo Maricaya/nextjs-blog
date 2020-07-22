@@ -53,5 +53,4 @@ git push
 ssh blog@dev1 'bash -s' < bin/deploy.sh
 # 执行服务器上脚本
 ssh blog@dev1 'sh /home/blog/app/nextjs-blog/bin/deploy.sh'
-
 ```
