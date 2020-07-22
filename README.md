@@ -54,3 +54,8 @@ ssh blog@dev1 'bash -s' < bin/deploy.sh
 # 执行服务器上脚本
 ssh blog@dev1 'sh /home/blog/app/nextjs-blog/bin/deploy.sh'
 ```
+
+## NGINX 配置 
+```bash
+docker run --name nginx1 --network=host -v /home/blog/nginx.conf:/etc/nginx/conf.d/default.conf -v /home/blog/app/nextjs-blog/.next/static/:/usr/share/nginx/html/_next/static/ -d nginx:1.19.1
+```

@@ -1,6 +1,21 @@
-import PostsIndex, {getServerSideProps} from './posts';
+import {NextPage} from 'next';
+import * as React from 'react';
 
-export default PostsIndex;
+const Home: NextPage = () => {
+  return (
+    <>
+      <div className="cover">
+        <img src="../assets/images/1.png" alt=""/>
+      </div>
+      <style jsx>{`
+        .cover {
+          width: 800px;
+          height: 800px;
+          background: pink;
+        }
+      `}</style>
+    </>
+  );
+};
 
-export {getServerSideProps};
-
+export default Home;
