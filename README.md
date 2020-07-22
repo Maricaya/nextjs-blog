@@ -48,8 +48,5 @@ npm run dev
 ## 部署
 
 ```bash 
-yarn install --production=false
-yarn build
-docker build -t sunnyla/node-web-app .
-docker run -p 3000:3000 -d sunnyla/node-web-app
+ssh blog@dev1 'sh /home/blog/app/nextjs-blog/bin/deploy.sh'
 ```
