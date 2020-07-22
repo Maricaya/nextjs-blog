@@ -48,6 +48,8 @@ npm run dev
 ## 部署
 
 ```bash 
+yarn install --production=false
 yarn build
-yarn start
+docker build -t sunnyla/node-web-app .
+docker run -p 3000:3000 -d sunnyla/node-web-app
 ```
