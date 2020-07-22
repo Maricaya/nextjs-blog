@@ -1,0 +1,30 @@
+diff --git a/src/entity/User.ts b/src/entity/User.ts
+index 7b898fd..85806ba 100644
+--- a/src/entity/User.ts
++++ b/src/entity/User.ts
+@@ -10,7 +10,7 @@ import {
+ } from 'typeorm';
+ import {Post} from './Post';
+ import {Comment} from './Comment';
+-import {getDatabaseConnection} from '../../lib/getDatabaseConnection';
++// import {getDatabaseConnection} from '../../lib/getDatabaseConnection';
+ import md5 from 'md5';
+ import _ from 'lodash';
+
+@@ -51,11 +51,11 @@ export class User {
+     if (this.username.trim().length <= 3) {
+       this.errors.username.push('太短');
+     }
+-    const found = await (await getDatabaseConnection()).manager.find(
+-      User, {username: this.username});
+-    if (found.length > 0) {
+-      this.errors.username.push('已存在，不能重复注册');
+-    }
++    // const found = await (await getDatabaseConnection()).manager.find(
++    //   User, {username: this.username});
++    // if (found.length > 0) {
++    //   this.errors.username.push('已存在，不能重复注册');
++    // }
+     if (this.password === '') {
+       this.errors.password.push('不能为空');
+     }
