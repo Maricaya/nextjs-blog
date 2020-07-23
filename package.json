@@ -4,8 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "concurrently \"next dev\" \"yarn compile:watch\"",
-    "compile:watch" : "babel -w ./src --out-dir dist --extensions .ts,.tsx",
-    "compile" : "babel ./src --out-dir dist --extensions .ts,.tsx",
+    "compile:watch": "babel -w ./src --out-dir dist --extensions .ts,.tsx",
+    "compile": "babel ./src --out-dir dist --extensions .ts,.tsx",
     "build": "next build",
     "start": "next start",
     "m:create": "typeorm migration:create",
@@ -17,6 +17,7 @@
     "@babel/cli": "^7.10.1",
     "@types/axios": "^0.14.0",
     "axios": "^0.19.2",
+    "github-markdown-css": "^4.0.0",
     "gray-matter": "^4.0.2",
     "lodash": "^4.17.15",
     "marked": "^1.1.0",
