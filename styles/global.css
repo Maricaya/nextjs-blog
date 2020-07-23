@@ -1,3 +1,6 @@
-body {
-  background: white;
-}
+* {margin: 0;padding: 0;box-sizing: border-box;}
+*::after, *::before {box-sizing: border-box;}
+a {text-decoration: none; color: #00adb5; border-bottom: 1px solid;}
+a, input, button {font: inherit;}
+h1 {margin: 8px 0;}
+p {margin: 4px 0;}
