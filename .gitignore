@@ -6,7 +6,7 @@
 /.vscode/
 /.pnp
 .pnp.js
-/.env.local
+*/.env.local
 em.sh
 # testing
 /coverage

@@ -4,7 +4,7 @@ cd /home/blog/app/nextjs-blog/ &&
 git pull &&
 yarn install --production=false &&
 yarn build &&
-git apply migrate.patch;
+git apply migrate.patch &&
 yarn compile &&
 yarn m:run &&
 git reset --hard HEAD &&

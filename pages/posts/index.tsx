@@ -76,33 +76,33 @@ const PostsIndex: NextPage<Props> = (props) => {
 export default PostsIndex;
 
 export const getServerSideProps: GetServerSideProps = withSession(
-  async (context: GetServerSidePropsContext) => {
-  const index = context.req.url.indexOf('?');
-  const search = context.req.url.substr(index + 1);
-  const query = qs.parse(search);
+async (context: GetServerSidePropsContext) => {
+    const index = context.req.url.indexOf('?');
+    const search = context.req.url.substr(index + 1);
+    const query = qs.parse(search);
 
-  const page = parseInt(query.page && query.page.toString()) || 1;
+    const page = parseInt(query.page && query.page.toString()) || 1;
 
-  const currentUser = (context.req as any).session.get('currentUser') || null;
+    const currentUser = (context.req as any).session.get('currentUser') || null;
 
-  const connection = await getDatabaseConnection();
-  const perPage = 10;
-  const [posts, count] = await connection.manager.findAndCount(Post, {
+    console.log('环境变量', process.env.SECRET);
+
+    const connection = await getDatabaseConnection();
+    const perPage = 10;
+    const [posts, count] = await connection.manager.findAndCount(Post, {
       skip: (page - 1) * perPage, take: perPage
-    }
-  );
-  const ua = context.req.headers['user-agent'];
+    });
+    const ua = context.req.headers['user-agent'];
 
-  const result = new UAParser(ua).getResult();
-  return {
-    props: {
-      browser: result.browser,
-      posts: JSON.parse(JSON.stringify(posts)),
-      count,
-      perPage,
-      page,
-      currentUser,
-      totalPage: Math.ceil(count / perPage)
-    }
-  };
-});
+    const result = new UAParser(ua).getResult();
+    return {
+      props: {
+        browser: result.browser,
+        posts: JSON.parse(JSON.stringify(posts)),
+        count,
+        perPage, page,
+        currentUser,
+        totalPage: Math.ceil(count / perPage)
+      }
+    };
+  });
