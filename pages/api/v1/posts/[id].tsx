@@ -19,6 +19,12 @@ const Posts: NextApiHandler = withSession(async (req, res) => {
     post.author = user;
     await connection.manager.save(post);
     res.json(post);
+  } else if (req.method === 'DELETE') {
+    const id = req.query.id.toString();
+    const connection = await getDatabaseConnection();
+    const result = await connection.manager.delete('Post', id);
+    res.statusCode = result.affected >= 0 ? 200 : 400;
+    res.end();
   }
 });
 
