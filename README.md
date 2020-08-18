@@ -1,5 +1,8 @@
 # 项目创建过程
 [Next.js + TypeScript 入门之项目搭建、三种渲染方式（BSR、SSG、SSR）](https://juejin.im/post/6855917901090652174)
+[TS + TypeORM 踩坑实践 (一) hello ORM](https://juejin.im/post/6857391336929263624)
+[TS + TypeORM 踩坑实践 (二) 操作数据表](https://juejin.im/post/6858509402798817294)
+
 # 代码使用
 
 请下载本代码，然后用 WebStorm 或者 VSCode 打开。
