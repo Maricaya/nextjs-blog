@@ -2,6 +2,7 @@
 - [Next.js + TypeScript 入门之项目搭建、三种渲染方式（BSR、SSG、SSR）](https://juejin.im/post/6855917901090652174)
 - [TS + TypeORM 踩坑实践 (一) hello ORM](https://juejin.im/post/6857391336929263624)
 - [TS + TypeORM 踩坑实践 (二) 操作数据表](https://juejin.im/post/6858509402798817294)
+- [从 0 开始部署你的 Node 应用(Ubantu、docker、nginx)](https://juejin.im/post/6864785804066029575)
 
 # 代码使用
 
