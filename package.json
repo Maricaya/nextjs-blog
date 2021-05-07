@@ -31,7 +31,7 @@
     "react-dom": "16.13.1",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.25",
-    "ua-parser-js": "^0.7.21"
+    "ua-parser-js": "^0.7.24"
   },
   "devDependencies": {
     "@babel/plugin-proposal-decorators": "^7.10.1",
